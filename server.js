@@ -224,6 +224,10 @@ const { sendMail } = require('./gmail_service');
 const { searchAmazonProducts } = require('./amazon_service'); // your amazon helper
 const connectDB = require('./db');
 
+
+
+
+
 // Models
 const ScheduledJob = require('./models/ScheduledJob');
 const EmailHistory = require('./models/EmailHistory');
@@ -234,7 +238,15 @@ connectDB();
 
 // --- Initialize Express ---
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: "https://ai-email-sender-fe.vercel.app",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+
+app.options("*", cors()); // ✅ VERY IMPORTANT
 app.use(bodyParser.json({ limit: '1mb' }));
 
 const PORT = process.env.PORT || 3000;
