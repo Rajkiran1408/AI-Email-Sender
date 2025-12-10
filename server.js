@@ -240,7 +240,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: "https://ai-email-sender-fe.vercel.app",
+  origin: "https://ai-email-sender-fe.vercel.app/",
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
