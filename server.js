@@ -552,12 +552,15 @@ const emailRequestCount = await Request.countDocuments({ type: "email" });
 
 
 
-// --- START SERVER ---
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  // restore pending jobs after server starts
-  restoreJobs().catch(err => console.error("restoreJobs error:", err));
-});
+// // --- START SERVER ---
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+//   // restore pending jobs after server starts
+//   restoreJobs().catch(err => console.error("restoreJobs error:", err));
+// });
+
+
+export default app;
 
 
 
