@@ -239,27 +239,27 @@ connectDB();
 // --- Initialize Express ---
 const app = express();
 
-const allowedOrigins = [
-  "https://ai-email-sender-fe.vercel.app",
-  "https://ai-email-sender-4i10wcdlp-rajkirans-projects-ccb1c2e8.vercel.app"
-];
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow Postman / server-to-server
+      if (!origin) return callback(null, true);
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // allow server-to-server & Postman
-    if (!origin) return callback(null, true);
+      // ✅ Allow ALL Vercel frontend URLs
+      if (origin.endsWith(".vercel.app")) {
+        return callback(null, true);
+      }
 
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
-}));
+      return callback(new Error("CORS not allowed"), false);
+    },
+    credentials: true,
+  })
+);
 
 
-app.options("*", cors()); // ✅ VERY IMPORTANT
+
+app.use(cors({ origin: "*" }));
+
 app.use(bodyParser.json({ limit: '1mb' }));
 
 const PORT = process.env.PORT || 3000;
