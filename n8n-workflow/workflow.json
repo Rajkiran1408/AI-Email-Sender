@@ -1,0 +1,61 @@
+{
+  "name": "Agentic Email - Single Line Input",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "send-instruction",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://localhost:3000/api/orchestrate",
+        "method": "POST",
+        "jsonParameters": true,
+        "options": {}
+      },
+      "name": "Call Orchestrator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [540, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "return items;"
+      },
+      "name": "Return Response",
+      "type": "n8n-nodes-base.returnAllData",
+      "typeVersion": 1,
+      "position": [820, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Call Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Orchestrator": {
+      "main": [
+        [
+          {
+            "node": "Return Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
